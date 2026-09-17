@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         雨课堂实时作答监控与 AI 答题助手
 // @namespace    https://github.com/F1atSnark/yuketang-lite
-// @version      1.0.0
+// @version      1.0.1
 // @description  只读监听雨课堂网页版实时通道：老师发题即时提醒（声音/桌面通知/标题闪烁/ntfy 可选），图片题直传视觉大模型生成参考答案；支持用你的 key 拉取可用模型列表选择模型。不自动提交答案，仅供学习对照。
 // @author       F1atSnark contributors
 // @homepageURL  https://github.com/F1atSnark/yuketang-lite
@@ -68,7 +68,7 @@
   const PROVIDERS = {
     openai:      { label: 'OpenAI',       base: 'https://api.openai.com/v1' },
     deepseek:    { label: 'DeepSeek',     base: 'https://api.deepseek.com' },
-    bigmodel:    { label: '智谱 AI',      base: 'https://open.bigmodel.cn/api/paas/v4' },
+    bigmodel:    { label: 'Zhipu AI',        base: 'https://open.bigmodel.cn/api/paas/v4' },
     custom:      { label: '其他兼容接口', base: '' },
   };
 
@@ -163,24 +163,29 @@
   }
 
   let flashTimer = null;
+  let flashOriginalTitle = '';
   const TITLE_MARK = '🔔';
   function startTitleFlash() {
     if (!S.titleFlash || flashTimer) return;
-    const orig = document.title;
+    flashOriginalTitle = document.title;
     let on = false;
+    let flashCount = 0;
     flashTimer = setInterval(() => {
       on = !on;
-      document.title = on ? `${TITLE_MARK} 有新题目！` : orig;
+      document.title = on ? `${TITLE_MARK} 有新题目！` : flashOriginalTitle;
+      if (on) flashCount += 1;
+      else if (flashCount >= 6) stopTitleFlash();
     }, 900);
-    setTimeout(stopTitleFlash, 120000);
   }
   function stopTitleFlash() {
-    if (!flashTimer) return;
-    clearInterval(flashTimer);
-    flashTimer = null;
-    if (document.title.startsWith(TITLE_MARK)) {
-      document.title = document.title.replace(`${TITLE_MARK} 有新题目！`, '').trim();
+    if (flashTimer) {
+      clearInterval(flashTimer);
+      flashTimer = null;
     }
+    if (document.title.startsWith(TITLE_MARK)) {
+      document.title = flashOriginalTitle;
+    }
+    flashOriginalTitle = '';
   }
 
   function notifyDesktop(title, text) {
@@ -1079,6 +1084,13 @@
       refreshDot();
     }
 
+    function renderKeepingScroll() {
+      const scrollTop = panelEl.querySelector('.body')?.scrollTop || 0;
+      render();
+      const body = panelEl.querySelector('.body');
+      if (body) body.scrollTop = scrollTop;
+    }
+
     function headHTML(title, showSettings) {
       return `<div class="head">
         ${view === 'home' ? '' : '<span class="icon-btn back" data-act="back">←</span>'}
@@ -1320,7 +1332,7 @@
             }
           }
           saveSettings();
-          if (k === 'provider') render();
+          if (k === 'provider') renderKeepingScroll();
         };
         el.addEventListener('change', commit);
       });
@@ -1457,7 +1469,7 @@
     // 调试句柄不暴露设置对象，避免页面脚本读取 API key。
     try {
       unsafeWindow.__yuketangLite = {
-        version: '1.0.0',
+        version: '1.0.1',
         session,
         Presentations,
         onWSFrame,

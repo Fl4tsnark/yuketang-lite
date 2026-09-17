@@ -91,13 +91,13 @@ assert.ok(!src.includes('API key（仅保存在本地）'), 'API key 标签应�
 assert.ok(!src.includes('ntfy topic（不能含空格；相当于密码，请保密）'), 'ntfy 标签应保持简洁');
 assert.match(src, /provider:\s*'',/, '新安装不应预选 AI 服务商');
 assert.match(src, /textModel:\s*'',/, '新安装不应预填模型');
-assert.match(src, /@updateURL\s+https:\/\/raw\.githubusercontent\.com\/yuketang-lite\/yuketang-lite\/main\/yuketang-lite\.user\.js/, '应提供 GitHub 更新地址');
-assert.match(src, /@downloadURL\s+https:\/\/raw\.githubusercontent\.com\/yuketang-lite\/yuketang-lite\/main\/yuketang-lite\.user\.js/, '应提供 GitHub 下载地址');
+assert.match(src, /@updateURL\s+https:\/\/raw\.githubusercontent\.com\/F1atSnark\/yuketang-lite\/main\/yuketang-lite\.user\.js/, '应提供 GitHub 更新地址');
+assert.match(src, /@downloadURL\s+https:\/\/raw\.githubusercontent\.com\/F1atSnark\/yuketang-lite\/main\/yuketang-lite\.user\.js/, '应提供 GitHub 下载地址');
 vm.runInContext(src, sandbox, { filename: 'yuketang-lite.user.js' });
 
 const yuketang = sandbox.unsafeWindow.__yuketangLite;
 assert.ok(yuketang, '__yuketangLite 调试句柄应已挂载');
-assert.strictEqual(yuketang.version, '1.0.0', '脚本版本应与发布版本一致');
+assert.strictEqual(yuketang.version, '1.0.1', '脚本版本应与发布版本一致');
 
 // ---------- 测试数据 ----------
 
