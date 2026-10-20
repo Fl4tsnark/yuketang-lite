@@ -19,7 +19,7 @@
 
 先为浏览器安装 [Tampermonkey](https://www.tampermonkey.net/)，然后点击：
 
-**[安装脚本](https://raw.githubusercontent.com/F1atSnark/yuketang-lite/main/yuketang-lite.user.js)**
+**[安装脚本](https://raw.githubusercontent.com/Fl4tsnark/yuketang-lite/main/yuketang-lite.user.js)**
 
 Tampermonkey 会自动打开安装确认页。安装完成后进入[雨课堂网页版](https://www.yuketang.cn/)，看到右下角的“雨课堂助手”悬浮条即表示加载成功。
 
