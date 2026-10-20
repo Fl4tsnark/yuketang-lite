@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         雨课堂实时作答监控与 AI 答题助手
-// @namespace    https://github.com/F1atSnark/yuketang-lite
+// @namespace    https://github.com/Fl4tsnark/yuketang-lite
 // @version      1.0.1
 // @description  只读监听雨课堂网页版实时通道：老师发题即时提醒（声音/桌面通知/标题闪烁/ntfy 可选），图片题直传视觉大模型生成参考答案；支持用你的 key 拉取可用模型列表选择模型。不自动提交答案，仅供学习对照。
-// @author       F1atSnark contributors
-// @homepageURL  https://github.com/F1atSnark/yuketang-lite
-// @supportURL   https://github.com/F1atSnark/yuketang-lite/issues
-// @updateURL    https://raw.githubusercontent.com/F1atSnark/yuketang-lite/main/yuketang-lite.user.js
-// @downloadURL  https://raw.githubusercontent.com/F1atSnark/yuketang-lite/main/yuketang-lite.user.js
+// @author       Fl4tsnark contributors
+// @homepageURL  https://github.com/Fl4tsnark/yuketang-lite
+// @supportURL   https://github.com/Fl4tsnark/yuketang-lite/issues
+// @updateURL    https://raw.githubusercontent.com/Fl4tsnark/yuketang-lite/main/yuketang-lite.user.js
+// @downloadURL  https://raw.githubusercontent.com/Fl4tsnark/yuketang-lite/main/yuketang-lite.user.js
 // @match        *://yuketang.cn/*
 // @match        *://*.yuketang.cn/*
 // @grant        GM_getValue
